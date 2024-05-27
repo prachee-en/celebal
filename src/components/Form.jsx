@@ -1,6 +1,6 @@
 // src/components/Form.js
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +16,7 @@ const Form = () => {
     aadharNo: ''
   });
   const [errors, setErrors] = useState({});
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,13 +25,14 @@ const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const errors = validateForm(formData);
-    if (Object.keys(errors).length === 0) {
-      // Successful submission, navigate to success route
-      history.push('/success', { formData });
-    } else {
-      setErrors(errors);
-    }
+    navigate('/success');
+    // const errors = validateForm(formData);
+    // if (Object.keys(errors).length === 0) {
+    //   // Successful submission, navigate to success route
+    //   navigate('/success', { state: { formData } });
+    // } else {
+    //   setErrors(errors);
+    // }
   };
 
   const validateForm = (data) => {
@@ -52,11 +53,11 @@ const Form = () => {
           <div>
             <label>First Name:</label>
             <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} />
-            {errors.firstName && <p className="text-red-500">{errors.firstName}</p>}
+            {/* {errors.firstName && <p className="text-red-500">{errors.firstName}</p>} */}
           </div>
           {/* Add similar markup for other fields */}
         </div>
-        <button type="submit" className="mt-4 bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50" disabled={!formData.firstName || !formData.lastName || !formData.username || !formData.email}>
+        <button type="submit" className="mt-4 bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50" >
           Submit
         </button>
       </form>
